@@ -23,14 +23,13 @@ scoring can run without crashing, which is covered by
 
 ## Week 8 — Reproduction & solution planning
 
-**Reproduction commit link:** [REPLACE_AFTER_PUSH — https://github.com/Tpulak/pathreview/commit/<sha>]
+**Reproduction commit link:** [(https://github.com/Tpulak/pathreview/commit/2b41309001a00d4b80cb6026a47fc02eef9a2f22)]
 
 **Reproduction summary:**
 Traced `FaithfulnessChecker.check()` in `rag/evaluator/faithfulness_checker.py`: when a context chunk is `{"text": None}`, `chunk.get("text", "")` returns `None` (key present), so `" ".join(...)` raises `TypeError: sequence item 0: expected str instance, NoneType found`. The same case is covered by the existing failing test `test_none_context_chunk_text` in `tests/unit/test_faithfulness_checker.py`.
 
 **PLAN.md link:** [https://github.com/Tpulak/pathreview/blob/fix/153-faithfulness-checker-none-text/PLAN.md]
 
-**Walkthrough video (recommended):** [link to your Loom video, ≤2 min — recommended, not graded]
 
 **Blockers or open questions:**
 Need project deps installed locally to run the unit test / repro snippet end-to-end (`structlog` missing in bare `python`). Root cause and fix location are clear from code inspection; Week 9 fix should be a small coercion before the join.
