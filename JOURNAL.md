@@ -54,7 +54,7 @@ None for the fix itself. `gh` CLI was not available locally for PR creation at f
 
 ### Check-in 2 (end of week)
 
-**PR link:** [REPLACE_AFTER_PR — paste GitHub PR URL here]
+**PR link:** [https://github.com/ascherj/pathreview/pull/999]
 
 **Branch:** [fix/153-faithfulness-checker-none-text]
 
