@@ -82,3 +82,56 @@ context-text join in `faithfulness_checker.py` and makes
 `test_none_context_chunk_text` pass; it does not introduce those other failures.
 `mypy rag/evaluator/faithfulness_checker.py` is clean; `eval_suite.py` has a
 pre-existing untyped-def error unrelated to this fix.
+
+## Week 10 — Iteration & reflection
+
+### Reviewer feedback
+
+**Feedback received:** [ ] Yes  [x] No — still awaiting review
+
+**Summary of feedback:**
+No review came in on PR #999 before this journal entry.
+
+**How you responded:**
+
+
+---
+
+### Reflection
+
+**What was harder than you expected?**
+Navigating PathReview as a whole was harder than the one-line fix itself. The
+bug lived in a small join inside `FaithfulnessChecker.check()`, but getting
+there meant learning the RAG evaluator layout, matching CONTRIBUTING branch and
+commit conventions, and setting up a local venv before I could even reproduce
+the `TypeError`. Running the full unit suite was also confusing at first —
+dozens of unrelated tests already fail — so I had to carefully separate
+pre-existing noise from whether my change was actually correct.
+
+**What did you learn about working in a large codebase?**
+In your own project you can rewrite freely; here the goal is a minimal, scoped
+change that fits existing patterns and tests. I spent more time reading
+`faithfulness_checker.py`, the unit test file, and docs than writing code. That
+felt backwards compared to greenfield work, but it's how you avoid breaking
+callers and how you prove the bug is real (`test_none_context_chunk_text`)
+before you touch anything.
+
+**How did AI tools help — and where did they fall short?**
+AI was most useful for tracing the `.get("text", "")` / `None` gotcha, drafting
+PLAN.md and journal sections, and suggesting the `(chunk.get("text") or "")`
+coercion. It fell short on environment specifics — Windows/`make`/`gh` setup,
+and deciding which failing tests were pre-existing vs. mine. I still had to
+run the targeted tests myself and check CONTRIBUTING before trusting any
+generated commit message or PR wording.
+
+**What would you do differently if you started over?**
+I'd set up the venv and run the faithfulness unit file in Week 7 or 8 so
+reproduction wasn't blocked on missing deps. I'd also open a draft PR earlier
+for peer feedback instead of waiting until the fix was already on a ready PR.
+For issue selection I'd still pick a Tier 1 bug, but I'd skim neighboring tests
+so I expect scoring-related failures that aren't part of my issue.
+
+**What are you most proud of from this module?**
+Writing a clear PLAN.md and reproducing the bug before coding. The actual fix
+was small, but documenting root cause, files, edge cases, and how I'd verify
+success made Week 9 feel controlled instead of guess-and-check.
